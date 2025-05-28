@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Split Result</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4f6f8;
+      --text: #333;
+      --card: #fff;
+      --highlight: #e3eafc;
+      --link: #007bff;
+    }
+
+    body.dark {
+      --bg: #0e1117;
+      --text: #e0e0e0;
+      --card: #1c1f26;
+      --highlight: #2a2d35;
+      --link: #66b2ff;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: var(--card);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background: var(--highlight);
+      padding: 12px 18px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .total {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    a {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
+      text-decoration: none;
+      color: var(--link);
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .toggle {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+    }
+
+    .toggle input {
+      display: none;
+    }
+
+    .toggle label {
+      cursor: pointer;
+      background: var(--card);
+      color: var(--text);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      user-select: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="toggle">
+    <input type="checkbox" id="modeToggle" />
+    <label for="modeToggle">🌙 Dark Mode</label>
+  </div>
+
+  <div class="container">
+    <h1>🧾 Split Result</h1>
+    <ul>
+      {% for person, amount in per_person.items() %}
+        <li>{{ person }} owes ${{ amount }}</li>
+      {% endfor %}
+    </ul>
+    <div class="total">Total with charges: ${{ total }}</div>
+    <a href="/">← Back to Home</a>
+  </div>
+
+  <script>
+  const toggle = document.getElementById("modeToggle");
+  const savedTheme = localStorage.getItem("theme");
+
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark");
+    toggle.checked = true;
+    toggle.nextElementSibling.textContent = "☀️ Light Mode";
+  }
+
+  toggle.addEventListener("change", function () {
+    document.body.classList.toggle("dark");
+    const isDark = document.body.classList.contains("dark");
+    toggle.nextElementSibling.textContent = isDark ? "☀️ Light Mode" : "🌙 Dark Mode";
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  });
+</script>
