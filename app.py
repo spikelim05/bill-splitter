@@ -17,7 +17,7 @@ def split():
     items = []
     total = 0
 
-    gst_rate = 0.08 if request.form.get('gst') else 0
+    gst_rate = 0.09 if request.form.get('gst') else 0
     service_rate = 0.10 if request.form.get('service') else 0
 
     i = 0
