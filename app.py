@@ -1,8 +1,7 @@
 import os
 from flask import Flask, request, render_template
 from werkzeug.utils import secure_filename
-from PIL import Image
-import pytesseract
+
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
@@ -48,23 +47,6 @@ def split():
         per_person[person] = round(per_person[person], 2)
 
     return render_template('result.html', per_person=per_person, total=round(final_total, 2))
-
-@app.route('/upload', methods=['POST'])
-def upload_receipt():
-    if 'receipt' not in request.files:
-        return "No file uploaded."
-
-    file = request.files['receipt']
-    if file.filename == '':
-        return "No selected file."
-
-    filename = secure_filename(file.filename)
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    file.save(filepath)
-
-    text = pytesseract.image_to_string(Image.open(filepath))
-
-    return render_template('ocr_result.html', raw_text=text)
 
 import os
 
