@@ -22,13 +22,12 @@ def split():
 
     i = 0
     while True:
-        name = request.form.get(f'item_{i}')
         price = request.form.get(f'price_{i}')
         person = request.form.get(f'person_{i}')
-        if not name or not price or not person:
+        if not price or not person:
             break
         price = float(price)
-        items.append({'item': name, 'price': price, 'person': person})
+        items.append({'price': price, 'person': person})
         total += price
         i += 1
 
